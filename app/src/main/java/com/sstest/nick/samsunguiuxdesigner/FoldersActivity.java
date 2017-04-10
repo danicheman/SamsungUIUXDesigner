@@ -24,7 +24,7 @@ public class FoldersActivity extends AppCompatActivity {
     private static final int SCROLL_DISTANCE = 25;
 
     private ViewPager viewPager;
-    private float x1, x2, dx;
+    private float x1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class FoldersActivity extends AppCompatActivity {
                 x1 = ev.getX();
                 return false;
             case (MotionEvent.ACTION_MOVE):
+                float x2, dx;
                 x2 = ev.getX();
                 dx = x2 - x1;
                 if (dx > SCROLL_DISTANCE) {
