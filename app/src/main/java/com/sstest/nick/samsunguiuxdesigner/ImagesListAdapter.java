@@ -8,28 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
-import java.io.FilenameFilter;
 
 /**
- * Created by NICK on 0008, April 4/08.
+ * Display Images in a specified folder
  */
 
-public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.ImageViewHolder> {
+public class ImagesListAdapter extends RecyclerView.Adapter<ImagesListAdapter.ImageViewHolder> {
 
     private final Context mContext;
     private final File[] mImageFiles;
 
-    public FolderListAdapter(Context context, File folder) {
-
+    public ImagesListAdapter(Context context, File folder) {
         mContext = context;
-        mImageFiles = folder.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return (name.endsWith(".jpg") || name.endsWith(".jpeg"));
-            }
-        });
-
+        mImageFiles = Util.getImageFiles(folder);
     }
 
     @Override
@@ -40,7 +34,10 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Im
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        holder.image.setImageBitmap(Util.getBitmap(mImageFiles[position]));
+        Glide
+            .with(mContext)
+            .load(mImageFiles[position])
+            .into(holder.image);
         holder.imageName.setText(mImageFiles[position].getName());
     }
 
